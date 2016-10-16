@@ -1,10 +1,9 @@
 /* CRITTERS Main.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
+ * <Ashvin Roharia>
+ * <ar34426>
+ * <16475>
+ * <Ram Muthukumar>
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
  * Slip days used: <0>
@@ -28,6 +27,8 @@ public class Main {
     private static String myPackage;	// package of Critter file.  Critter cannot be in default pkg.
     private static boolean DEBUG = false; // Use it or not, as you wish!
     static PrintStream old = System.out;	// if you want to restore output to console
+    static String in;   //user's input
+    static boolean hasDisplayedError = false; // true if an error has just been displayed
 
 
     // Gets the package name.  The usage assumes that Critter and its subclasses are all in the same package.
@@ -69,10 +70,78 @@ public class Main {
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
         
-        System.out.println("GLHF");
+        while(true) {
+			System.out.print("critters>");
+			in = kb.nextLine();	
+			String[] parameters = in.split(" ");
+			in = in.toLowerCase();
+			
+			
+			switch (parameters[0]) {
+			
+				//if user wants to quit the program
+				case "quit":
+					if (parameters.length > 1) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+						kb.close();
+					}
+					return;
+	
+				//if user wants to display the board
+				case "show":
+					if (parameters.length > 1) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+
+					}
+					continue;
+	
+				case "step":
+	
+					if (parameters.length > 2) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+
+					}
+					continue;
+	
+				case "seed":	
+					if (parameters.length > 2) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+
+					}
+					continue;
+	
+				case "make":
+					if (parameters.length != 3) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+					
+					}
+					continue;
+				
+				//if user's types "stats"
+				case "stats":
+					if (parameters.length != 2) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+						
+					}
+					continue;
+					
+				default:
+					System.out.println("Invalid command: " + in);
+				}
+        	}
         
         /* Write your code above */
-        System.out.flush();
-
     }
 }

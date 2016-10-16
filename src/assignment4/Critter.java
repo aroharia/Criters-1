@@ -1,10 +1,9 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
+ * <Ashvin Roharia>
+ * <ar34426>
+ * <16475>
+ * <Ram Muthukumar>
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
  * Slip days used: <0>
@@ -73,6 +72,22 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+		
+		try{
+			//adds input to the world if its valid
+			Critter c = (Critter) Class.forName(myPackage + "." + critter_class_name).newInstance();
+			Critter.population.add(c);
+			
+			//initializations
+			c.energy=Params.start_energy;
+			c.x_coord = Critter.getRandomInt(Params.world_width);
+			c.y_coord = Critter.getRandomInt(Params.world_height);
+		}
+		catch(ClassNotFoundException|InstantiationException|IllegalAccessException|NoClassDefFoundError e){
+			System.out.println("error processing: " + Main.in);
+			Main.hasDisplayedError = true;
+		}
+		
 	}
 	
 	/**
@@ -83,7 +98,21 @@ public abstract class Critter {
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
-	
+		Class<?> critterClass = null;
+
+		try {
+			critterClass = Class.forName(critter_class_name);
+		} 
+		catch (ClassNotFoundException|NoClassDefFoundError e) {
+			System.out.println("error processing: " + Main.in);
+		}
+
+		for (Critter a : population) {
+			if (critterClass.isInstance(a)) {
+				result.add(a);
+			}
+		}
+		
 		return result;
 	}
 	
@@ -167,6 +196,8 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
+		population.clear();
+		babies.clear();
 	}
 	
 	public static void worldTimeStep() {
