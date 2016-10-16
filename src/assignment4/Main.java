@@ -79,8 +79,19 @@ public class Main {
 			
 			switch (parameters[0]) {
 			
+				case "make":
+					//is input valid - base check
+					if (parameters.length != 3) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+					
+					}
+					continue;
+				
 				//if user wants to quit the program
 				case "quit":
+					//is input valid - base check
 					if (parameters.length > 1) {
 						System.out.println("error processing: " + in);
 					}
@@ -89,18 +100,35 @@ public class Main {
 					}
 					return;
 	
+					//if user's types "stats"
+				case "stats":
+					//is input valid - base check
+					if (parameters.length != 2) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+						
+					}
+					continue;
+
 				//if user wants to display the board
 				case "show":
+					//is input valid - base check
 					if (parameters.length > 1) {
 						System.out.println("error processing: " + in);
 					}
 					else {
-
+						try{
+							Critter.displayWorld();
+						}
+						catch(NullPointerException|NumberFormatException exception){
+							System.out.println("error processing: " + in);
+						}
 					}
 					continue;
 	
 				case "step":
-	
+					//is input valid - base check
 					if (parameters.length > 2) {
 						System.out.println("error processing: " + in);
 					}
@@ -110,6 +138,7 @@ public class Main {
 					continue;
 	
 				case "seed":	
+					//is input valid - base check
 					if (parameters.length > 2) {
 						System.out.println("error processing: " + in);
 					}
@@ -117,29 +146,11 @@ public class Main {
 
 					}
 					continue;
-	
-				case "make":
-					if (parameters.length != 3) {
-						System.out.println("error processing: " + in);
-					}
-					else {
-					
-					}
-					continue;
-				
-				//if user's types "stats"
-				case "stats":
-					if (parameters.length != 2) {
-						System.out.println("error processing: " + in);
-					}
-					else {
-						
-					}
-					continue;
 					
 				default:
-					System.out.println("Invalid command: " + in);
+					System.out.println("Invalid command: " + in);	
 				}
+        		
         	}
         
         /* Write your code above */

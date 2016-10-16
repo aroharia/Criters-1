@@ -203,5 +203,46 @@ public abstract class Critter {
 	public static void worldTimeStep() {
 	}
 	
-	public static void displayWorld() {}
+	public static void displayWorld() {
+		
+		String[][] critterWorld = new String[Params.world_height+2][Params.world_width+2]; 
+		// iterate through entire grid
+		for (int height = 0; height < Params.world_height+2; height++ ) {
+			for (int width = 0; width < Params.world_width+2; width++ ) {
+				//if you're on the horizontal border
+				if (height == 0 || height == Params.world_height+1) {
+					//if you're on the corner's of the horizontal border
+					if (width == 0 || width == Params.world_width+1) {
+						critterWorld[height][width] = "+";
+						continue;
+					}
+					//if you're on the bar for the horizontal border
+					else 
+						critterWorld[height][width] = "-";
+				}
+				
+				//if you're on the vertical border (corners have already been drawn)
+				else if (width == 0 || width == Params.world_width+1)
+					critterWorld[height][width] = "|";
+				
+				//blanks for everything within the border
+				else 
+					critterWorld[height][width] = " ";
+			}
+		}
+		
+		//fill in the world with alive creatures
+		for (Critter crit : population) {
+			critterWorld[crit.y_coord + 1][crit.x_coord + 1] = crit.toString(); //offset by 1 because of top border
+		}
+		
+		//iterate through the entire grid and prints the border, corners, blank spaces, and critters
+		for (int height = 0; height < Params.world_height+2; height++) {
+			for (int width = 0; width < Params.world_width+2; width++) {
+				System.out.print(critterWorld[height][width]);
+			}
+			System.out.print("\n"); //go to the next line, to print next row
+		}
+		
+	}
 }
