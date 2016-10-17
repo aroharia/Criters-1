@@ -74,11 +74,29 @@ public class Main {
 			System.out.print("critters>");
 			in = kb.nextLine();	
 			String[] parameters = in.split(" ");
-			in = in.toLowerCase();
-			
 			
 			switch (parameters[0]) {
-			
+				//if user's types "stats"
+				case "stats":
+					//is input valid - base check
+					if (parameters.length != 2) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+						//TO-DO
+					}
+					continue;
+					
+				case "seed":	
+					//is input valid - base check
+					if (parameters.length > 2) {
+						System.out.println("error processing: " + in);
+					}
+					else {
+						//TO-DO
+					}
+					continue;
+					
 				case "make":
 					//is input valid - base check
 					if (parameters.length != 3) {
@@ -123,17 +141,6 @@ public class Main {
 						kb.close();
 					}
 					return;
-	
-				//if user's types "stats"
-				case "stats":
-					//is input valid - base check
-					if (parameters.length != 2) {
-						System.out.println("error processing: " + in);
-					}
-					else {
-						
-					}
-					continue;
 
 				//if user wants to display the board
 				case "show":
@@ -173,16 +180,6 @@ public class Main {
 						catch (NumberFormatException e ) {
 							System.out.println("error processing: " + in);
 						}
-					}
-					continue;
-	
-				case "seed":	
-					//is input valid - base check
-					if (parameters.length > 2) {
-						System.out.println("error processing: " + in);
-					}
-					else {
-
 					}
 					continue;
 					

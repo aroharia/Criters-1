@@ -61,16 +61,16 @@ public abstract class Critter {
 			case 0: this.x_coord = this.x_coord + distance;
 			break;
 			
-			//down-right
+			//up-right
 			case 1: this.x_coord = this.x_coord + distance;
 			this.y_coord = this.y_coord - distance;
 			break;
 			
-			//down
+			//up
 			case 2: this.y_coord = this.y_coord - distance;
 			break;
 			
-			//down-left
+			//up-left
 			case 3: this.x_coord = this.x_coord - distance;
 			this.y_coord = this.y_coord - distance;
 			break;
@@ -79,16 +79,16 @@ public abstract class Critter {
 			case 4: this.x_coord = this.x_coord - distance;
 			break;
 			
-			//up-left
+			//down-left
 			case 5: this.x_coord = this.x_coord - distance;
 			this.y_coord = this.y_coord + distance;
 			break;
 			
-			//up
+			//down
 			case 6: this.y_coord = this.y_coord + distance;
 			break;
 			
-			//up-right
+			//down-right
 			case 7: this.x_coord = this.x_coord + distance;
 			this.y_coord = this.y_coord + distance;
 			break;
@@ -179,7 +179,6 @@ public abstract class Critter {
 			System.out.println("error processing: " + Main.in);
 			Main.hasDisplayedError = true; //so that error isn't displayed multiple times
 		}
-		
 	}
 	
 	/**
@@ -292,6 +291,31 @@ public abstract class Critter {
 		babies.clear();
 	}
 	
+	/**
+	 * Returns true if there'a critter on the grid location 
+	 */
+	private boolean isNotFree() {
+		for (Critter critter : population) {
+			if (critter == this)
+				continue;
+			if ((critter.x_coord == this.x_coord) && (critter.y_coord == this.y_coord))
+				return true;
+		}
+		return false;
+	}
+	
+	public static void critter1Wins(Critter critter1, Critter critter2){
+		critter1.energy = critter1.energy + (critter2.energy)/2;
+		critter2.energy = 0;
+		critter2.alive = false;
+	}
+	
+	public static void critter2Wins(Critter critter1, Critter critter2){
+		critter2.energy = critter2.energy + (critter1.energy)/2;
+		critter1.energy = 0;
+		critter1.alive = false;
+	}
+	
 	public static void worldTimeStep() {
 		java.util.ArrayList<Critter> removeList = new java.util.ArrayList<Critter>();
 		
@@ -308,6 +332,77 @@ public abstract class Critter {
 				removeList.add(critter);	
 		}
 		
+		//fights
+		//iterate through each potential critter interaction
+		for (Critter critter1: population) {
+			for (Critter critter2: population) {
+				if (critter1 == critter2) 
+					continue; //ignore if comparing the same critters
+				//if the 2 critters occupy the same grid location
+				if ((critter1.x_coord == critter2.x_coord ) && (critter1.y_coord == critter2.y_coord)) {
+					//ignore if one is dead, it will be removed later
+					if (critter1.isAlive() && critter2.isAlive()){
+						boolean critter1_fight = critter1.fight(critter2.toString());
+						boolean critter2_fight = critter2.fight(critter1.toString());
+						
+						//critter1 
+						int tempx = critter1.x_coord;
+						int tempy = critter1.y_coord;
+						//critter is dead if it runs out of energy
+						if (critter1.energy <= 0) 
+							critter1.alive = false; 
+						if (critter1.isNotFree()) {
+							critter1.x_coord = tempx;
+							critter1.y_coord = tempy; 
+						}
+						
+						//critter2
+						tempx = critter2.x_coord;
+						tempy = critter2.y_coord;
+						//critter is dead if it runs out of energy
+						if (critter2.energy <= 0)
+							critter2.alive = false;
+						if (critter2.isNotFree()) { 
+							critter2.x_coord = tempx; 
+							critter2.y_coord = tempy; 
+						}
+						
+						//if the 2 critters occupy the same grid location
+						if ((critter1.x_coord == critter2.x_coord ) && (critter1.y_coord == critter2.y_coord)) {
+							//ignore if one is dead, it will be removed later
+							if (critter1.isAlive() && critter2.isAlive()){
+							
+								int critter1Rand = 0;
+								int critter2Rand = 0;
+								if (critter1_fight)
+									critter1Rand = Critter.getRandomInt(critter1.energy);
+								if (critter2_fight)
+									critter2Rand = Critter.getRandomInt(critter2.energy);
+								
+								//if critter 1 is winner
+								if (critter1Rand > critter2Rand)
+									critter1Wins(critter1, critter2);		
+
+								//if critter2 is winner
+								else if (critter2Rand > critter1Rand)
+									critter2Wins(critter1, critter2);		
+								
+								//if tie, randomize winner
+								else {
+									int oneOrZero = Critter.getRandomInt(2); //int will be 0 or 1
+									if (oneOrZero == 1) 
+										critter1Wins(critter1, critter2);
+									else 
+										critter2Wins(critter1, critter2);		
+								}
+							}
+						}
+					}
+				}
+			}
+		} 
+		
+		
 		//new algae
 		try {
 			for (int i  = 0; i < Params.refresh_algae_count; i++) {
@@ -321,12 +416,18 @@ public abstract class Critter {
 			Main.hasDisplayedError = true; //to prevent multiple error messages
 		}
 		
+		//new babies
+		for (Critter critter : babies) {
+			critter.alive = true;
+			population.add(critter);
+		}
+		java.util.ArrayList<Critter> babiesList = new java.util.ArrayList<Critter>(babies);
+		babies.removeAll(babiesList);
 		
 		//remove dead
 		for(Critter critter: removeList){			
 			population.remove(critter);
 		}
-		
 	}
 	
 	public static void displayWorld() {
