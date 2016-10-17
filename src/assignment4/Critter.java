@@ -171,7 +171,7 @@ public abstract class Critter {
 		}
 		catch(ClassNotFoundException|InstantiationException|IllegalAccessException|NoClassDefFoundError e){
 			System.out.println("error processing: " + Main.in);
-			Main.hasDisplayedError = true;
+			Main.hasDisplayedError = true; //so that error isn't displayed multiple times
 		}
 		
 	}

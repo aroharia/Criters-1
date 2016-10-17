@@ -85,7 +85,31 @@ public class Main {
 						System.out.println("error processing: " + in);
 					}
 					else {
-					
+						Integer inputInt;
+						String classname = parameters[1];
+						
+						try{
+							inputInt = Integer.parseInt(parameters[2]);
+						} 
+						catch (NumberFormatException e) {
+							System.out.println("error processing: " + in);
+							continue;
+						}
+						
+						try {
+							for (int i = 0; i < inputInt; i += 1) {
+								Critter.makeCritter(classname);
+								if(hasDisplayedError){
+									hasDisplayedError = false;
+									break;
+								}
+							}
+						}
+						catch (InvalidCritterException e) {
+							System.out.println("error processing: " + in);
+							break;
+						}
+						
 					}
 					continue;
 				
