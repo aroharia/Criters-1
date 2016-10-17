@@ -23,6 +23,12 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	
+	//to keep track if critter is alive
+	private boolean alive = true;
+	public boolean isAlive(){
+		return alive;
+	}
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -287,8 +293,39 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		java.util.ArrayList<Critter> removeList = new java.util.ArrayList<Critter>();
 		
-		//TO DO - big!
+		//doTimeStep for current critters in the grid
+		for (Critter critter: population) {
+			critter.doTimeStep();
+			critter.hasMoved = false;
+			if (critter.energy <= 0) 
+				critter.alive = false; 
+			//energy decreases
+			critter.energy = critter.energy - Params.rest_energy_cost;
+			//add to remove list if dead or energy reaches 0
+			if (critter.energy <= 0 || !critter.isAlive()) 
+				removeList.add(critter);	
+		}
+		
+		//new algae
+		try {
+			for (int i  = 0; i < Params.refresh_algae_count; i++) {
+				if(Main.hasDisplayedError)
+					break;
+				Critter.makeCritter("Algae");
+			}
+		} 
+		catch (InvalidCritterException|NoClassDefFoundError e) {
+			System.out.println("error processing: " + Main.in);
+			Main.hasDisplayedError = true; //to prevent multiple error messages
+		}
+		
+		
+		//remove dead
+		for(Critter critter: removeList){			
+			population.remove(critter);
+		}
 		
 	}
 	

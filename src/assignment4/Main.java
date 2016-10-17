@@ -97,7 +97,7 @@ public class Main {
 						}
 						
 						try {
-							for (int i = 0; i < inputInt; i += 1) {
+							for (int i = 0; i < inputInt; i++) {
 								Critter.makeCritter(classname);
 								if(hasDisplayedError){
 									hasDisplayedError = false;
@@ -124,7 +124,7 @@ public class Main {
 					}
 					return;
 	
-					//if user's types "stats"
+				//if user's types "stats"
 				case "stats":
 					//is input valid - base check
 					if (parameters.length != 2) {
@@ -153,11 +153,26 @@ public class Main {
 	
 				case "step":
 					//is input valid - base check
-					if (parameters.length > 2) {
+					if (parameters.length > 2)
 						System.out.println("error processing: " + in);
-					}
 					else {
-
+						Integer numSteps;
+						try {
+							numSteps = Integer.parseInt(parameters[1]);
+							for (int i = 0; i < numSteps; i++) {
+								if(hasDisplayedError){
+									hasDisplayedError = false;
+									break;
+								}
+								Critter.worldTimeStep();
+							}
+						}
+						catch (IndexOutOfBoundsException e) {
+							Critter.worldTimeStep();
+						} 
+						catch (NumberFormatException e ) {
+							System.out.println("error processing: " + in);
+						}
 					}
 					continue;
 	
