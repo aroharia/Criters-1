@@ -47,15 +47,101 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	private boolean hasMoved; // true if Critter has moved in this time step
 	
-	protected final void walk(int direction) {
-	}
-	
-	protected final void run(int direction) {
+	private final void move(int direction, int distance) {
+		switch (direction) {
+			//right
+			case 0: this.x_coord = this.x_coord + distance;
+			break;
+			
+			//down-right
+			case 1: this.x_coord = this.x_coord + distance;
+			this.y_coord = this.y_coord - distance;
+			break;
+			
+			//down
+			case 2: this.y_coord = this.y_coord - distance;
+			break;
+			
+			//down-left
+			case 3: this.x_coord = this.x_coord - distance;
+			this.y_coord = this.y_coord - distance;
+			break;
+			
+			//left
+			case 4: this.x_coord = this.x_coord - distance;
+			break;
+			
+			//up-left
+			case 5: this.x_coord = this.x_coord - distance;
+			this.y_coord = this.y_coord + distance;
+			break;
+			
+			//up
+			case 6: this.y_coord = this.y_coord + distance;
+			break;
+			
+			//up-right
+			case 7: this.x_coord = this.x_coord + distance;
+			this.y_coord = this.y_coord + distance;
+			break;
+			
+			//error
+			default: break;
+		}
 		
+		if (this.x_coord > Params.world_width - 1) { // relocate to left side
+			this.x_coord = this.x_coord - Params.world_width;
+		}
+		else if (this.x_coord < 0) { // relocate to right side
+			this.x_coord = this.x_coord + Params.world_width;
+		}
+		if (this.y_coord > Params.world_height - 1) { // relocate to top
+			this.y_coord = this.y_coord - Params.world_height;
+		}
+		else if (this.y_coord < 0) { // relocate to bottom
+			this.y_coord = this.y_coord + Params.world_height;
+		}
 	}
+	
+	/**
+	 * Critters moves a distance of one in the given direction
+	 * @param direction is the direction the critter will walk
+	 */
+	protected final void walk(int direction) {
+		this.energy = this.energy - Params.walk_energy_cost;
+		if (hasMoved)
+			return;
+		this.move(direction, 1);
+		hasMoved = true;
+	}
+	
+	/**
+	 * Critters moves a distance of one in the given direction
+	 * @param direction is the direction the critter will run
+	 */
+	protected final void run(int direction) {
+		this.energy = this.energy - Params.run_energy_cost;
+		if (hasMoved)
+			return;
+		this.move(direction, 2);
+		hasMoved = true;
+		}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		
+		if (this.energy < Params.min_reproduce_energy)
+			return;
+		
+		offspring.energy = this.energy / 2;
+		this.energy = (int) Math.ceil(this.energy /2);
+		
+		//puts baby next to parent
+		offspring.x_coord = this.x_coord;
+		offspring.y_coord = this.y_coord;
+		offspring.move(direction, 1);
+		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
@@ -201,6 +287,9 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		
+		//TO DO - big!
+		
 	}
 	
 	public static void displayWorld() {
