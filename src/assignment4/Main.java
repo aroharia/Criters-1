@@ -10,6 +10,7 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 
@@ -83,7 +84,58 @@ public class Main {
 						System.out.println("error processing: " + in);
 					}
 					else {
-						//TO-DO
+						/*
+						String requested_class = parameters[1];
+						List<Critter> instances = null;
+						try{
+							instances = Critter.getInstances(requested_class);	
+						} catch (InvalidCritterException e) {
+							System.out.println("error processing: " + in);	
+							if(hasDisplayedError){
+								hasDisplayedError = false;
+								break;
+							}
+						}
+						
+						if (instances.size() <= 0) {
+							System.out.println("error processing: " + in);
+							continue;
+						}
+						Class<?> critter_class = null;
+						Class [] paramList = new Class[1];
+						paramList[0] = java.util.List.class;
+
+						try{
+							critter_class = Class.forName(requested_class);
+							java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
+							runStats.invoke(critter_class, instances);
+						} catch (Exception e1) {
+							System.out.println("error processing: " + in);						
+						}
+						*/
+						String inputClass = parameters[1];
+        				List<Critter> crits = null;
+        				try {
+        					crits = Critter.getInstances(inputClass);
+        				}
+        				catch (InvalidCritterException e) {
+        					System.out.println("error processing: " + parameters);
+        				}
+        				Class<?> critClass = null;
+        				Class<?>[] types = {List.class};
+        				try {
+        					critClass = Class.forName(myPackage + "." + inputClass);
+        					java.lang.reflect.Method runStats = critClass.getMethod("runStats", types);
+        					runStats.invoke(critClass, crits);
+        				}
+        				catch (Exception|NoClassDefFoundError e) {
+        					if(hasDisplayedError){
+								hasDisplayedError = false;
+								break;
+							}
+        					System.out.println("error processing: " + in);
+        				}
+						
 					}
 					continue;
 					
@@ -93,7 +145,15 @@ public class Main {
 						System.out.println("error processing: " + in);
 					}
 					else {
-						//TO-DO
+						Integer seedNum;
+						try{
+							seedNum = Integer.parseInt(parameters[1]);
+							Critter.setSeed(seedNum);
+						} catch (IndexOutOfBoundsException e) {
+							System.out.println("error processing: " + in);
+						} catch (NumberFormatException e) {
+							System.out.println("error processing: " + in);
+						}
 					}
 					continue;
 					

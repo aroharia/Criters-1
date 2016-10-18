@@ -192,16 +192,22 @@ public abstract class Critter {
 		Class<?> critterClass = null;
 
 		try {
-			critterClass = Class.forName(critter_class_name);
+			critterClass = Class.forName(myPackage + "." + critter_class_name);
 		} 
 		catch (ClassNotFoundException|NoClassDefFoundError e) {
 			System.out.println("error processing: " + Main.in);
+			Main.hasDisplayedError = true;
 		}
-
-		for (Critter a : population) {
-			if (critterClass.isInstance(a)) {
-				result.add(a);
+		try {
+			
+			for (Critter critter : population) {
+				if (critterClass.isInstance(critter)) {
+					result.add(critter);
+				}
 			}
+		}
+		catch(NullPointerException|NoClassDefFoundError e){
+			//System.out.println("error processing: " + Main.in);
 		}
 		
 		return result;
