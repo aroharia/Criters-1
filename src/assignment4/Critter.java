@@ -176,8 +176,8 @@ public abstract class Critter {
 			c.y_coord = Critter.getRandomInt(Params.world_height);
 		}
 		catch(ClassNotFoundException|InstantiationException|IllegalAccessException|NoClassDefFoundError e){
-			System.out.println("error processing: " + Main.in);
-			Main.hasDisplayedError = true; //so that error isn't displayed multiple times
+//			Main.hasDisplayedError = true; //so that error isn't displayed multiple times
+			throw new InvalidCritterException(critter_class_name);
 		}
 	}
 	
@@ -195,8 +195,8 @@ public abstract class Critter {
 			critterClass = Class.forName(myPackage + "." + critter_class_name);
 		} 
 		catch (ClassNotFoundException|NoClassDefFoundError e) {
-			System.out.println("error processing: " + Main.in);
-			Main.hasDisplayedError = true;
+			throw new InvalidCritterException(critter_class_name);
+//			Main.hasDisplayedError = true;
 		}
 		try {
 			
@@ -327,8 +327,8 @@ public abstract class Critter {
 		
 		//doTimeStep for current critters in the grid
 		for (Critter critter: population) {
-			critter.doTimeStep();
 			critter.hasMoved = false;
+			critter.doTimeStep();
 			if (critter.energy <= 0) 
 				critter.alive = false; 
 			//energy decreases
