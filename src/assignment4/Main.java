@@ -4,8 +4,8 @@
  * <ar34426>
  * <16475>
  * <Ram Muthukumar>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * <rm48763>
+ * <16470>
  * Slip days used: <0>
  * Fall 2016
  */
@@ -206,7 +206,7 @@ public class Main {
 				case "show":
 					//is input valid - base check
 					if (parameters.length > 1) {
-						System.out.println("error processing: " + in);
+						System.out.println("Invalid command: " + in);
 					}
 					else {
 						try{

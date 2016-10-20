@@ -1,3 +1,15 @@
+/* CRITTERS Critter3.java
+ * EE422C Project 4 submission by
+ * <Ashvin Roharia>
+ * <ar34426>
+ * <16475>
+ * <Ram Muthukumar>
+ * <rm48763>
+ * <16470>
+ * Slip days used: <0>
+ * Fall 2016
+ */
+
 package assignment4;
 
 /*

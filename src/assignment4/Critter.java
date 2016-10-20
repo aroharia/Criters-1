@@ -4,8 +4,8 @@
  * <ar34426>
  * <16475>
  * <Ram Muthukumar>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * <rm48763>
+ * <16470>
  * Slip days used: <0>
  * Fall 2016
  */
