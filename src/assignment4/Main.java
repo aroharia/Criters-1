@@ -159,21 +159,21 @@ public class Main {
 					
 				case "make":
 					//is input valid - base check
-					if (parameters.length != 3) {
+					if (parameters.length == 1 || parameters.length > 2) {
 						System.out.println("error processing: " + in);
 					}
 					else {
 						Integer inputInt;
 						String classname = parameters[1];
-						
-						try{
-							inputInt = Integer.parseInt(parameters[2]);
-						} 
-						catch (NumberFormatException e) {
-							System.out.println("error processing: " + in);
-							continue;
+						if(parameters.length == 2) inputInt = 1;
+						else{
+							try{
+								inputInt = Integer.parseInt(parameters[2]);
+							} 
+							catch (NumberFormatException e) {
+								inputInt = 1;
+							}
 						}
-						
 						try {
 							for (int i = 0; i < inputInt; i++) {
 								Critter.makeCritter(classname);

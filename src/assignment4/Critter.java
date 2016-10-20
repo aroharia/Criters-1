@@ -348,29 +348,31 @@ public abstract class Critter {
 				if ((critter1.x_coord == critter2.x_coord ) && (critter1.y_coord == critter2.y_coord)) {
 					//ignore if one is dead, it will be removed later
 					if (critter1.isAlive() && critter2.isAlive()){
+						int C1tempx = critter1.x_coord;
+						int C1tempy = critter1.y_coord;
+						int C2tempx = critter2.x_coord;
+						int C2tempy = critter2.y_coord;
 						boolean critter1_fight = critter1.fight(critter2.toString());
 						boolean critter2_fight = critter2.fight(critter1.toString());
 						
 						//critter1 
-						int tempx = critter1.x_coord;
-						int tempy = critter1.y_coord;
+						
 						//critter is dead if it runs out of energy
 						if (critter1.energy <= 0) 
 							critter1.alive = false; 
 						if (critter1.isNotFree()) {
-							critter1.x_coord = tempx;
-							critter1.y_coord = tempy; 
+							critter1.x_coord = C1tempx;
+							critter1.y_coord = C1tempy; 
 						}
 						
 						//critter2
-						tempx = critter2.x_coord;
-						tempy = critter2.y_coord;
+						
 						//critter is dead if it runs out of energy
 						if (critter2.energy <= 0)
 							critter2.alive = false;
 						if (critter2.isNotFree()) { 
-							critter2.x_coord = tempx; 
-							critter2.y_coord = tempy; 
+							critter2.x_coord = C2tempx; 
+							critter2.y_coord = C2tempy; 
 						}
 						
 						//if the 2 critters occupy the same grid location
