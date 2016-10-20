@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Tests</name>
+			<type>2</type>
+			<location>C:/Users/ramse_000/OneDrive/Documents/Workspace/Criters 1/Tests</location>
+		</link>
+	</linkedResources>
 </projectDescription>

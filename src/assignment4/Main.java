@@ -159,7 +159,7 @@ public class Main {
 					
 				case "make":
 					//is input valid - base check
-					if (parameters.length == 1 || parameters.length > 2) {
+					if (parameters.length == 1 || parameters.length > 3) {
 						System.out.println("error processing: " + in);
 					}
 					else {
