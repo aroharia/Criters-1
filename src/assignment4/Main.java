@@ -84,35 +84,6 @@ public class Main {
 						System.out.println("error processing: " + in);
 					}
 					else {
-						/*
-						String requested_class = parameters[1];
-						List<Critter> instances = null;
-						try{
-							instances = Critter.getInstances(requested_class);	
-						} catch (InvalidCritterException e) {
-							System.out.println("error processing: " + in);	
-							if(hasDisplayedError){
-								hasDisplayedError = false;
-								break;
-							}
-						}
-						
-						if (instances.size() <= 0) {
-							System.out.println("error processing: " + in);
-							continue;
-						}
-						Class<?> critter_class = null;
-						Class [] paramList = new Class[1];
-						paramList[0] = java.util.List.class;
-
-						try{
-							critter_class = Class.forName(requested_class);
-							java.lang.reflect.Method runStats = critter_class.getMethod("runStats", paramList);
-							runStats.invoke(critter_class, instances);
-						} catch (Exception e1) {
-							System.out.println("error processing: " + in);						
-						}
-						*/
 						String inputClass = parameters[1];
         				List<Critter> crits = null;
         				try {
@@ -246,9 +217,7 @@ public class Main {
 				default:
 					System.out.println("Invalid command: " + in);	
 				}
-        		
         	}
-        
-        /* Write your code above */
+          /* Write your code above */
     }
 }

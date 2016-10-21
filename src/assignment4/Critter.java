@@ -26,6 +26,10 @@ public abstract class Critter {
 	
 	//to keep track if critter is alive
 	private boolean alive = true;
+	/**
+	 * Checks if the critter is alive
+	 * @return true if the critter is alive
+	 */
 	public boolean isAlive(){
 		return alive;
 	}
@@ -36,10 +40,20 @@ public abstract class Critter {
 	}
 	
 	private static java.util.Random rand = new java.util.Random();
+	
+	/**
+	 * Gives you a random number based on your input
+	 * @param max is the max number the random integer could be
+	 * @return a random integer
+	 */
 	public static int getRandomInt(int max) {
 		return rand.nextInt(max);
 	}
 	
+	/**
+	 * Sets a seed
+	 * @param new_seed is the new seed to be set
+	 */
 	public static void setSeed(long new_seed) {
 		rand = new java.util.Random(new_seed);
 	}
@@ -49,12 +63,20 @@ public abstract class Critter {
 	public String toString() { return ""; }
 	
 	private int energy = 0;
+	/**
+	 * Get's the energy
+	 * @return the integer value of energy
+	 */
 	protected int getEnergy() { return energy; }
 	
 	private int x_coord;
 	private int y_coord;
 	private boolean hasMoved; // true if Critter has moved in this time step
 	
+	/**
+	 * Critters moves a distance of one in the given direction
+	 * @param direction is the direction the critter will move
+	 */
 	private final void move(int direction, int distance) {
 		switch (direction) {
 			//right
@@ -135,6 +157,11 @@ public abstract class Critter {
 		hasMoved = true;
 		}
 	
+	/**
+	 * Adds the offspring to the baby list and places it next to its parent
+	 * @param offspring is the baby
+	 * @param direction is what direction the offspring should be in comparison to the parent
+	 */
 	protected final void reproduce(Critter offspring, int direction) {
 		
 		if (this.energy < Params.min_reproduce_energy)
@@ -310,18 +337,31 @@ public abstract class Critter {
 		return false;
 	}
 	
+	/**
+	 * Kills critter 2 and increases critter 1's energy
+	 * @param critter1 is one of the critter's engaging in a fight
+	 * @param critter2 is the other critter engaging in a fight
+	 */
 	public static void critter1Wins(Critter critter1, Critter critter2){
 		critter1.energy = critter1.energy + (critter2.energy)/2;
 		critter2.energy = 0;
 		critter2.alive = false;
 	}
 	
+	/**
+	 * Kills critter 1 and increases critter 2's energy
+	 * @param critter1 is one of the critter's engaging in a fight
+	 * @param critter2 is the other critter engaging in a fight
+	 */
 	public static void critter2Wins(Critter critter1, Critter critter2){
 		critter2.energy = critter2.energy + (critter1.energy)/2;
 		critter1.energy = 0;
 		critter1.alive = false;
 	}
 	
+	/** 
+	 * Executes critter time steps, fights, generate new algae and babies, and remove dead.
+	 */
 	public static void worldTimeStep() {
 		java.util.ArrayList<Critter> removeList = new java.util.ArrayList<Critter>();
 		
@@ -438,6 +478,9 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * Prints out the grid and alive critters within the grid
+	 */
 	public static void displayWorld() {
 		
 		String[][] critterWorld = new String[Params.world_height+2][Params.world_width+2]; 
